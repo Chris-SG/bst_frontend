@@ -1,0 +1,11 @@
+.ButtonGroup {
+    width: 100%;
+}
+
+div.btn-group.btn-group-toggle .btn-primary.btn.active:not(:disabled):not(.disabled) {
+    background-color: purple;
+}
+
+div.btn-group.btn-group-toggle label.btn-primary.btn.ToggleButton {
+    background-color: blue;
+}

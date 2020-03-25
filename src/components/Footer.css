@@ -1,0 +1,17 @@
+#footer {
+    margin-top: 40px;
+    border-top-style: solid;
+}
+
+#footer span {
+    color: #777777;
+}
+
+#footer span.bst-api-status-ok {
+    color: #00FF00;
+}
+
+#footer span.bst-api-status-bad {
+    color: #FF0000;
+}
+
