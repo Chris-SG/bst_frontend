@@ -33,5 +33,6 @@ jobs:
           ${{ secrets.API_SERVER_PRIVATE_KEY }}
           EOF
           chmod 400 id_rsa
+          ssh -o StrictHostKeyChecking=no -i "id_rsa" ${{ secrets.API_SERVER_USER }}@${{ secrets.API_SERVER_IP }} rm -r ${{ secrets.API_SERVER_DEST }}/dist || true
           scp -o StrictHostKeyChecking=no -i "id_rsa" -r dist ${{ secrets.API_SERVER_USER }}@${{ secrets.API_SERVER_IP }}:${{ secrets.API_SERVER_DEST }}
           rm id_rsa

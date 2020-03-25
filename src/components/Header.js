@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import axios from 'axios';
+import { Cookies, withCookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +24,12 @@ export default class Header extends Component {
       });
   }
 
+  clearCookie() {
+    const { cookies } = this.props;
+    cookies.remove('auth-session');
+    window.location.replace('/logout');
+  }
+
   render() {
     const { userLoaded, user } = this.state;
     return (
@@ -30,6 +38,7 @@ export default class Header extends Component {
           <Navbar.Brand href="/"><strong>BST</strong></Navbar.Brand>
           <Nav className="mr-auto">
             <NavDropdown href="/ddr" title="DDR">
+              <NavDropdown.Item href="/ddr">Profile</NavDropdown.Item>
               <NavDropdown.Item href="/ddr/stats">Stats</NavDropdown.Item>
             </NavDropdown>
           </Nav>
@@ -42,8 +51,10 @@ export default class Header extends Component {
                       user
                         ? (
                           <>
-                            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                            <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
+                            <NavDropdown.Item href="/user">Profile</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => this.clearCookie()}>
+                              Logout
+                            </NavDropdown.Item>
                           </>
                         )
                         : <NavDropdown.Item href="/login">Login</NavDropdown.Item>
@@ -58,3 +69,9 @@ export default class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(Header);

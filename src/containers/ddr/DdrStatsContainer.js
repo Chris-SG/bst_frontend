@@ -89,13 +89,12 @@ export default class DdrStatsContainer extends PureComponent {
 
   loadStats() {
     axios
-      // .get('/external/bst_api/ddr_stats.html', {})
-      .get('/ddr_stats.html', {})
+      .get('/external/bst_api/ddr_stats', {})
       .then((response) => {
-        const data = response.data.substring(0, response.data.lastIndexOf(']') + 1);
+        console.log(response);
         this.setState(
           {
-            statsData: JSON.parse(data),
+            statsData: response.data,
           },
         );
       })
