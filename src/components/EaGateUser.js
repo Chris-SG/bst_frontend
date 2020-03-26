@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { Button, Col, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import EaGateLoginForm from './user/EaGateLoginForm';
 
@@ -56,9 +56,9 @@ export default class EaGateField extends Component {
 
 export class EaGateUserDisplay extends Component {
   handleSubmit() {
-    const { user } = this.props;
+    const { username } = this.props;
     const jsonData = {
-      username: user,
+      username,
     };
 
     axios
@@ -74,17 +74,17 @@ export class EaGateUserDisplay extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { username } = this.props;
     return (
       <Form>
         <Form.Row>
           <Form.Text>
             Logged in as
-            {user}
+            {username}
           </Form.Text>
         </Form.Row>
         <Form.Row>
-          <Button type="submit">Unlink</Button>
+          <Button onClick={() => this.handleSubmit()}>Unlink</Button>
         </Form.Row>
       </Form>
     );
@@ -92,9 +92,9 @@ export class EaGateUserDisplay extends Component {
 }
 
 EaGateUserDisplay.defaultProps = {
-  user: '',
+  username: '',
 };
 
 EaGateUserDisplay.propTypes = {
-  user: PropTypes.string,
+  username: PropTypes.string,
 };

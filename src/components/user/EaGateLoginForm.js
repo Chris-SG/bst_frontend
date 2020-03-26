@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Button, Col, Form } from 'react-bootstrap';
-import EaGateField from '../EaGateUser';
 
 export default class EaGateLoginForm extends Component {
   constructor(props) {
@@ -15,16 +14,6 @@ export default class EaGateLoginForm extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    console.log(event);
-    this.setState({
-      eagateUsername: event.target.eagateUsername,
-      eagatePassword: event.target.eagatePassword,
-      eagateOTP: event.target.eagateOTP,
-      eagateHelper: event.target.eagateHelper,
-    });
   }
 
   onUsernameChange(value) {
@@ -48,6 +37,16 @@ export default class EaGateLoginForm extends Component {
   onHelperChange(value) {
     this.setState({
       eagateHelper: value,
+    });
+  }
+
+  handleChange(event) {
+    console.log(event);
+    this.setState({
+      eagateUsername: event.target.eagateUsername,
+      eagatePassword: event.target.eagatePassword,
+      eagateOTP: event.target.eagateOTP,
+      eagateHelper: event.target.eagateHelper,
     });
   }
 
@@ -91,7 +90,7 @@ export default class EaGateLoginForm extends Component {
         if (response.data.status === 'bad') {
           ReactDOM.render(<EaGateLoginForm />, document.getElementById('eagate'));
         } else if (response.data.status === 'ok') {
-          ReactDOM.render(<EaGateField />, document.getElementById('eagate'));
+          window.location.replace(window.location.href);
         }
       });
   }
