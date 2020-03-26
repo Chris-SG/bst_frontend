@@ -16,15 +16,16 @@ export default class EaGateField extends Component {
       .get('/external/bst_api/eagate_login', {})
       .then((response) => {
         console.log(response);
-        if (response.status !== 200) {
+        if (response.status !== 200 || response.data.length === 0 || response.data[0].expired) {
           this.setState({
             loginLoaded: true,
             user: '',
           });
+          return;
         }
         this.setState({
           loginLoaded: true,
-          user: 'abc',
+          user: response.data[0].username,
         });
       })
       .catch(() => {
