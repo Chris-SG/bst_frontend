@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 export default function LoadButton(props) {
   const {
-    buttonText, failureText, isLoading, onButtonClick,
+    buttonText, failureText, isLoading, onButtonClick, isRefreshSuccessful,
   } = props;
   return (
     <>
       {
-        failureText
+        !isRefreshSuccessful
           ? <Alert variant="danger">{failureText}</Alert>
           : ''
       }
@@ -29,4 +29,5 @@ LoadButton.propTypes = {
   failureText: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onButtonClick: PropTypes.func.isRequired,
+  isRefreshSuccessful: PropTypes.bool.isRequired,
 };

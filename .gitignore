@@ -3,3 +3,4 @@ build
 .lock.json
 dist
 .idea
+.DS_Store
