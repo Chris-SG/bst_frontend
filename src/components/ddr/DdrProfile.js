@@ -1,60 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import {
   Col, Container, Row, Spinner,
 } from 'react-bootstrap';
-import { Chart } from 'react-charts';
+import Chart from 'react-apexcharts';
 import { DdrLoadAll, DdrLoadRecent } from './DdrDataLoad';
 
 const loadAllCallback = () => {
   window.location.replace(window.location.href);
 };
 
-const generatePlaycountTable = (profile) => {
-  const data = React.useMemo(() => {
+const chartFromProfile = (profile) => {
+  const chartWidth = 500;
+  const chartType = 'bar';
+  const chartSeries = [
+    {
+      data: [],
+    },
+  ];
+  const chartOptions = {
+    chart: {
+      id: 'playcount',
+      toolbar: {
+        tools: {
+          download: false,
+        },
+      },
+    },
+    xaxis: {
+      categories: [],
+    },
+  };
+  if (profile != null) {
     const playCounts = new Map();
-
+    const today = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getUTCDate() - i);
+      const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
+      playCounts[dateString] = 0;
+    }
     profile.WorkoutData.forEach((wd) => {
+      console.log(wd);
       playCounts[wd.Date] = wd.Playcount;
     });
     const graphData = [];
-    const today = new Date();
     for (let i = 29; i >= 0; i--) {
-      const date = new Date(today.getUTCDate() - 5);
-      const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
-      graphData.push([dateString, playCounts[dateString]]);
+      const date = new Date(today);
+      date.setDate(date.getUTCDate() - i);
+      const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
+      chartSeries[0].data.push(playCounts[dateString]);
+      chartOptions.xaxis.categories.push([dateString]);
     }
-    return {
-      label: 'Playcount',
-      data: graphData,
-    };
-  }, []);
+  }
 
-  const axes = React.useMemo(
-    () => [
-      { primary: true, type: 'linear', position: 'bottom' },
-      { type: 'linear', position: 'left' },
-    ],
-    [],
-  );
-
-  return (
-    <div
-      style={{
-        width: '400px',
-        height: '300px',
-      }}
-    >
-      <Chart data={data} axes={axes} />
-    </div>
-  );
+  return {
+    chartOptions,
+    chartSeries,
+    chartType,
+    chartWidth,
+  };
 };
 
 const DdrProfile = () => {
   const [profile, setProfile] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLinked, setIsLinked] = useState(false);
-  const [graph, setGraph] = useState(null)
 
   useEffect(() => {
     axios
@@ -71,14 +82,29 @@ const DdrProfile = () => {
       })
       .catch((error) => {
         console.log(error);
+        setProfile(JSON.parse(`{
+          "Name": "BAUXE",
+          "Id": 41316566,
+          "WorkoutData": [
+            {"Date":"2020-4-19","Playcount":5},
+            {"Date":"2020-4-16","Playcount":23},
+            {"Date":"2020-4-13","Playcount":1},
+            {"Date":"2020-4-5","Playcount":66},
+            {"Date":"2020-4-1","Playcount":23},
+            {"Date":"2020-3-25","Playcount":15}
+           ]
+        }`));
+        setIsLoaded(true);
+        setIsLinked(true);
       });
   }, []);
 
-  useEffect(() => {
-    if (profile != null) {
-      setGraph(generatePlaycountTable(profile));
-    }
-  }, [profile]);
+  const {
+    chartOptions, chartSeries, chartType, chartWidth
+  } = chartFromProfile(profile);
+
+  console.log(chartOptions);
+  console.log(chartSeries);
 
   if (!isLoaded) {
     return (
@@ -109,7 +135,21 @@ const DdrProfile = () => {
           {profile.Id}
         </Col>
       </Row>
-      {graph}
+      <div
+        style={{
+          width: '400px',
+          height: '300px',
+        }}
+      >
+        <div className="mixed-chart">
+          <Chart
+            options={chartOptions}
+            series={chartSeries}
+            type={chartType}
+            width={chartWidth}
+          />
+        </div>
+      </div>
       <Row>
         <Col>
           <span>Load all your recent plays! This should be used if you have played less than 50 songs since last loading data.</span>
