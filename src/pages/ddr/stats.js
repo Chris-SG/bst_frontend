@@ -6,7 +6,6 @@ import PageContainer from '../../containers/PageContainer';
 import DdrStatsContainer from '../../containers/ddr/DdrStatsContainer';
 
 ReactDOM.render(
-  <PageContainer>
-    <DdrStatsContainer />
+  <PageContainer render={DdrStatsContainer}>
   </PageContainer>, document.getElementById('root'),
 );
