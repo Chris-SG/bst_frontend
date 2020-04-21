@@ -99,7 +99,14 @@ const DdrProfile = () => {
     >
       <Row>
         <Col>
-          {profile.Name}
+          <span
+            style={{
+              fontWeight: 'bold',
+              fontSize: '4em',
+            }}
+          >
+            {profile.Name}
+          </span>
           <br />
           {profile.Id}
         </Col>
