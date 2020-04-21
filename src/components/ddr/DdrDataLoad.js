@@ -8,7 +8,7 @@ const loadButtonClicked = (url, callback, loadingState, successState) => {
 
   axios({
     method: 'patch',
-    url: '/external/bst_api/ddr_update',
+    url,
   })
     .then((response) => {
       if (response.status === 200) {

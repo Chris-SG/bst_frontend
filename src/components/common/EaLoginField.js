@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -133,7 +133,7 @@ const EaLoginForm = ({ submitCallback, loginName }) => {
       };
     }
     return submission;
-  }
+  };
 
   return (
     <Form>
