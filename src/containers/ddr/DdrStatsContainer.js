@@ -7,7 +7,7 @@ import {
   DefaultCellRenderer, LevelCellRenderer
 } from '../../components/ddr/DdrStatsTable';
 import DdrStatsModeFilter from '../../components/ddr/DdrStatsModeFilter';
-import DdrStatsDropdownFilter from '../../components/ddr/DdrStatsDropdownFilter';
+import { DdrStatsDropdownFilter } from '../../components/ddr/DdrStatsDropdownFilter';
 
 const modeSortingAlg = (a, b) => {
   if (a === b) return 0;

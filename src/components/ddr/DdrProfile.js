@@ -1,66 +1,31 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
+import
+{
   Col, Container, Row, Spinner,
 } from 'react-bootstrap';
-import Chart from 'react-apexcharts';
-import { DdrLoadAll, DdrLoadRecent } from './DdrDataLoad';
+import styled from 'styled-components';
+import { DdrLoadButton } from './DdrDataLoad';
+import { PlaycountGraphMemo } from '../common/PlaycountGraph';
 
 const loadAllCallback = () => {
   window.location.replace(window.location.href);
 };
 
-const chartFromProfile = (profile) => {
-  const chartWidth = 500;
-  const chartType = 'bar';
-  const chartSeries = [
-    {
-      data: [],
-    },
-  ];
-  const chartOptions = {
-    chart: {
-      id: 'playcount',
-      toolbar: {
-        tools: {
-          download: false,
-        },
-      },
-    },
-    xaxis: {
-      categories: [],
-    },
-  };
-  if (profile != null) {
-    const playCounts = new Map();
-    const today = new Date();
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getUTCDate() - i);
-      const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
-      playCounts[dateString] = 0;
-    }
-    profile.WorkoutData.forEach((wd) => {
-      console.log(wd);
-      playCounts[wd.Date] = wd.Playcount;
-    });
-    const graphData = [];
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getUTCDate() - i);
-      const dateString = `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
-      chartSeries[0].data.push(playCounts[dateString]);
-      chartOptions.xaxis.categories.push([dateString]);
-    }
-  }
-
-  return {
-    chartOptions,
-    chartSeries,
-    chartType,
-    chartWidth,
-  };
+const loadRecentCallback = () => {
+  window.location.replace(window.location.href);
 };
+
+const StyledContainer = styled(Container)`
+    border-style: groove;
+    border-radius: 8px;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+    float: center;
+ `;
 
 const DdrProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -86,25 +51,18 @@ const DdrProfile = () => {
           "Name": "BAUXE",
           "Id": 41316566,
           "WorkoutData": [
-            {"Date":"2020-4-19","Playcount":5},
-            {"Date":"2020-4-16","Playcount":23},
-            {"Date":"2020-4-13","Playcount":1},
-            {"Date":"2020-4-5","Playcount":66},
+            {"Date":"2020-3-25","Playcount":15},
             {"Date":"2020-4-1","Playcount":23},
-            {"Date":"2020-3-25","Playcount":15}
+            {"Date":"2020-4-5","Playcount":66},
+            {"Date":"2020-4-13","Playcount":1},
+            {"Date":"2020-4-16","Playcount":23},
+            {"Date":"2020-4-19","Playcount":5}
            ]
         }`));
         setIsLoaded(true);
         setIsLinked(true);
       });
   }, []);
-
-  const {
-    chartOptions, chartSeries, chartType, chartWidth
-  } = chartFromProfile(profile);
-
-  console.log(chartOptions);
-  console.log(chartSeries);
 
   if (!isLoaded) {
     return (
@@ -121,13 +79,24 @@ const DdrProfile = () => {
         <br />
         <span>To link your profile, click the button below to load your profile.</span>
         <br />
-        <DdrLoadAll callback={loadAllCallback} failureText="Failed to load profile. Please try again." />
+        <DdrLoadButton
+          buttonText="Load All Scores"
+          url="/external/bst_api/ddr_refresh"
+          callback={loadAllCallback}
+          failureText="Failed to load all data."
+        />
       </>
     );
   }
 
+  const today = new Date();
+  const start = new Date();
+  start.setUTCDate(today.getUTCDate() - 29);
+
   return (
-    <Container fluid="lg">
+    <StyledContainer
+      fluid="sm"
+    >
       <Row>
         <Col>
           {profile.Name}
@@ -135,32 +104,42 @@ const DdrProfile = () => {
           {profile.Id}
         </Col>
       </Row>
-      <div
-        style={{
-          width: '400px',
-          height: '300px',
-        }}
-      >
-        <div className="mixed-chart">
-          <Chart
-            options={chartOptions}
-            series={chartSeries}
-            type={chartType}
-            width={chartWidth}
+      <Row>
+        <div className="mixed-chart" style={{ margin: 'auto' }}>
+          <PlaycountGraphMemo
+            data={profile.WorkoutData}
+            startingDate={`${start.getUTCFullYear()}-${start.getUTCMonth() + 1}-${start.getUTCDate()}`}
+            endingDate={`${today.getUTCFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`}
           />
         </div>
-      </div>
+      </Row>
       <Row>
         <Col>
-          <span>Load all your recent plays! This should be used if you have played less than 50 songs since last loading data.</span>
-          <DdrLoadRecent failureText="failed to load recent data" />
+          <span>
+            Load all your recent plays! This should be used if you have played less than 50 songs since last loading data.
+          </span>
+          <br />
+          <DdrLoadButton
+            buttonText="Load Recent Scores"
+            url="/external/bst_api/ddr_update"
+            callback={loadRecentCallback}
+            failureText="Failed to load recent data."
+          />
         </Col>
         <Col>
-          <span>Load your whole history! This should be used if you have played more than 50 songs since last loading data.</span>
-          <DdrLoadAll failureText="failed to load data" />
+          <span>
+            Load your whole history! This should be used if you have played more than 50 songs since last loading data.
+          </span>
+          <br />
+          <DdrLoadButton
+            buttonText="Load All Scores"
+            url="/external/bst_api/ddr_refresh"
+            callback={loadAllCallback}
+            failureText="Failed to load all data."
+          />
         </Col>
       </Row>
-    </Container>
+    </StyledContainer>
   );
 };
 

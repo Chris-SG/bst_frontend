@@ -35,6 +35,7 @@ module.exports = (env, argv) => ({
       src: path.resolve(__dirname, 'src'),
       components: path.resolve(__dirname, 'src', 'components'),
       containers: path.resolve(__dirname, 'src', 'containers'),
+      helpers: path.resolve(__dirname, 'src', 'helpers'),
     },
   },
   module: {

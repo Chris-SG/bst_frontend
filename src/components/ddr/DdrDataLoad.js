@@ -1,131 +1,62 @@
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import LoadButton from '../common/LoadButton';
+import { LoadButton } from '../common/LoadButton';
 
-export class DdrLoadRecent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      isRefreshSuccessful: true,
-    };
-  }
+const loadButtonClicked = (url, callback, loadingState, successState) => {
+  loadingState(true);
 
-  loadRecentOnButtonClick() {
-    this.setState({
-      isLoading: true,
-    });
-
-    axios({
-      method: 'patch',
-      url: '/external/bst_api/ddr_update',
+  axios({
+    method: 'patch',
+    url: '/external/bst_api/ddr_update',
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        loadingState(false);
+        successState(true);
+        callback(true, 'Successfully loaded data.');
+      } else {
+        loadingState(false);
+        successState(false);
+      }
     })
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({
-            isLoading: false,
-            isRefreshSuccessful: true,
-          });
-        } else {
-          this.setState({
-            isLoading: false,
-            isRefreshSuccessful: false,
-          });
-        }
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          isRefreshSuccessful: true,
-        });
-      });
-  }
-
-  render() {
-    const { isLoading, isRefreshSuccessful } = this.state;
-    const { failureText } = this.props;
-    return (
-      <>
-        <LoadButton
-          buttonText="Load Recent Scores"
-          failureText={failureText}
-          isLoading={isLoading}
-          isRefreshSuccessful={isRefreshSuccessful}
-          onButtonClick={() => {
-            this.loadRecentOnButtonClick();
-          }}
-        />
-      </>
-    );
-  }
+    .catch(() => {
+      loadingState(false);
+      successState(false);
+    });
 }
 
-DdrLoadRecent.propTypes = {
-  failureText: PropTypes.string.isRequired,
+export const DdrLoadButton = ({
+  buttonText,
+  url,
+  callback,
+  failureText,
+}) => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isRefreshSuccessful, setIsRefreshSuccessful] = React.useState(true);
+
+  console.log(callback);
+  useEffect(() => {
+  }, []);
+
+  return (
+    <>
+      <LoadButton
+        buttonText={buttonText}
+        failureText={failureText}
+        isLoading={isLoading}
+        isRefreshSuccessful={isRefreshSuccessful}
+        onButtonClick={() => {
+          loadButtonClicked(url, callback, setIsLoading, setIsRefreshSuccessful);
+        }}
+      />
+    </>
+  );
 };
 
-export class DdrLoadAll extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      isRefreshSuccessful: true,
-    };
-  }
-
-  loadAllOnButtonClick() {
-    this.setState({
-      isLoading: true,
-    });
-
-    axios({
-      method: 'patch',
-      url: '/external/bst_api/ddr_refresh',
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          const { callback } = this.props;
-          this.setState({
-            isLoading: false,
-            isRefreshSuccessful: true,
-          });
-          callback();
-        } else {
-          this.setState({
-            isLoading: false,
-            isRefreshSuccessful: false,
-          });
-        }
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          isRefreshSuccessful: true,
-        });
-      });
-  }
-
-  render() {
-    const { isLoading, isRefreshSuccessful } = this.state;
-    const { failureText } = this.props;
-    return (
-      <>
-        <LoadButton
-          buttonText="Load Recent Scores"
-          failureText={failureText}
-          isLoading={isLoading}
-          isRefreshSuccessful={isRefreshSuccessful}
-          onButtonClick={() => {
-            this.loadAllOnButtonClick();
-          }}
-        />
-      </>
-    );
-  }
-}
-
-DdrLoadAll.propTypes = {
+DdrLoadButton.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   callback: PropTypes.func.isRequired,
   failureText: PropTypes.string.isRequired,
 };

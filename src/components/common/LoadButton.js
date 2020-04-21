@@ -2,27 +2,30 @@ import React from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-export default function LoadButton(props) {
-  const {
-    buttonText, failureText, isLoading, onButtonClick, isRefreshSuccessful,
-  } = props;
-  return (
-    <>
-      {
-        !isRefreshSuccessful
-          ? <Alert variant="danger">{failureText}</Alert>
-          : ''
-      }
-      <Button
-        variant="primary"
-        disabled={isLoading}
-        onClick={onButtonClick}
-      >
-        {isLoading ? 'Loading...' : buttonText}
-      </Button>
-    </>
-  );
-}
+export const LoadButton = (
+  {
+    buttonText,
+    failureText,
+    isLoading,
+    onButtonClick,
+    isRefreshSuccessful,
+  },
+) => (
+  <>
+    {
+      !isRefreshSuccessful
+        ? <Alert variant="danger">{failureText}</Alert>
+        : ''
+    }
+    <Button
+      variant="primary"
+      disabled={isLoading}
+      onClick={onButtonClick}
+    >
+      {isLoading ? 'Loading...' : buttonText}
+    </Button>
+  </>
+);
 
 LoadButton.propTypes = {
   buttonText: PropTypes.string.isRequired,
