@@ -31,25 +31,9 @@ const EaLoginStatus = (setLoginState, setName, setLoading) => {
     });
 };
 
-const EaLogin = (username, password, otp, helper) => {
-  let submission = {
-    username,
-    password,
-  };
-
-  if (otp && otp.length !== 0) {
-    submission = {
-      submission,
-      otp,
-    };
-  }
-
-  if (helper) {
-    submission = {
-      submission,
-      helper,
-    };
-  }
+const EaLogin = (loginRequestData) => {
+  const submission = loginRequestData();
+  console.log(submission);
 
   ReactDOM.render(<Loading />, document.getElementById('eagate'));
 
@@ -129,6 +113,28 @@ const EaLoginForm = ({ submitCallback, loginName }) => {
   const [otp, setOtp] = React.useState('');
   const [helper, setHelper] = React.useState(false);
 
+  const loginRequestData = () => {
+    let submission = {
+      username,
+      password,
+    };
+
+    if (otp && otp.length !== 0) {
+      submission = {
+        submission,
+        otp,
+      };
+    }
+
+    if (helper) {
+      submission = {
+        submission,
+        helper,
+      };
+    }
+    return submission;
+  }
+
   return (
     <Form>
       <EaFormGroup
@@ -162,7 +168,7 @@ const EaLoginForm = ({ submitCallback, loginName }) => {
       </Form.Group>
       <Form.Group as={Form.Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button onClick={() => submitCallback(username, password, otp, helper)}>Login</Button>
+          <Button onClick={() => submitCallback(loginRequestData)}>Login</Button>
         </Col>
       </Form.Group>
     </Form>
