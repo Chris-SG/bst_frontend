@@ -25,6 +25,7 @@ const StyledContainer = styled(Container)`
     padding-bottom: 8px;
     text-align: center;
     float: center;
+    background-color: #CCCCCC;
  `;
 
 const DdrProfile = () => {
@@ -102,7 +103,7 @@ const DdrProfile = () => {
           <span
             style={{
               fontWeight: 'bold',
-              fontSize: '4em',
+              fontSize: '2em',
             }}
           >
             {profile.Name}
