@@ -25,7 +25,7 @@ const StyledContainer = styled(Container)`
     padding-bottom: 8px;
     text-align: center;
     float: center;
-    background-color: #CCCCCC;
+    background-color: #444444;
     max-width: 50%;
     @media (max-width: 800px) {
       max-width: 400px;

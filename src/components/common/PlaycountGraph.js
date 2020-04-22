@@ -29,9 +29,24 @@ export const PlaycountGraph = ({ data, startingDate, endingDate }) => {
     },
     xaxis: {
       categories: [],
+      labels: {
+        style: {
+          colors: [],
+        },
+      },
     },
     yaxis: {
       min: 0,
+      labels: {
+        style: {
+          colors: ['#CCCCCC'],
+        },
+      },
+    },
+    dataLabels: {
+      style: {
+        colors: ['#CCCCCC'],
+      },
     },
   };
 

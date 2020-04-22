@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import {
   DdrStatsTable,
-  CellRenderer,
   DefaultCellRenderer, LevelCellRenderer,
 } from '../../components/ddr/DdrStatsTable';
 import { DdrStatsDropdownFilter } from '../../components/ddr/DdrStatsDropdownFilter';
@@ -98,6 +96,77 @@ export default class DdrStatsContainer extends PureComponent {
         );
       })
       .catch((error) => {
+        const d = JSON.parse(`[
+    {
+        "level": 1,
+        "title": "only my railgun",
+        "artist": "fripSide",
+        "mode": "SINGLE",
+        "difficulty": "BEGINNER",
+        "lamp": "",
+        "rank": "",
+        "score": 0,
+        "playcount": 0,
+        "clearcount": 0,
+        "maxcombo": 0
+    },
+    {
+        "level": 2,
+        "title": "oarfish",
+        "artist": "kors k",
+        "mode": "SINGLE",
+        "difficulty": "BASIC",
+        "lamp": "",
+        "rank": "",
+        "score": 0,
+        "playcount": 0,
+        "clearcount": 0,
+        "maxcombo": 0
+    },
+    {
+        "level": 3,
+        "title": "Taking It To The Sky",
+        "artist": "U1 feat. Tammy S. Hansen",
+        "mode": "SINGLE",
+        "difficulty": "DIFFICULT",
+        "lamp": "",
+        "rank": "",
+        "score": 0,
+        "playcount": 0,
+        "clearcount": 0,
+        "maxcombo": 0
+    },
+    {
+        "level": 4,
+        "title": "BABY BABY GIMME YOUR LOVE",
+        "artist": "DIVAS",
+        "mode": "SINGLE",
+        "difficulty": "EXPERT",
+        "lamp": "",
+        "rank": "",
+        "score": 0,
+        "playcount": 0,
+        "clearcount": 0,
+        "maxcombo": 0
+    },
+    {
+        "level": 5,
+        "title": "DROP",
+        "artist": "dj TAKA feat.Kanako Hoshino",
+        "mode": "SINGLE",
+        "difficulty": "CHALLENGE",
+        "lamp": "",
+        "rank": "",
+        "score": 0,
+        "playcount": 0,
+        "clearcount": 0,
+        "maxcombo": 0
+    }]`);
+        this.setState(
+          {
+            statsData: d,
+          },
+        );
         console.log(error);
       });
   }

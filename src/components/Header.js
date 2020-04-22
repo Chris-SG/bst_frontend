@@ -3,16 +3,12 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { Cookies, withCookies } from 'react-cookie';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { StyledHeader } from '../componentstylers/container-styles';
 
 const clearCookie = (cookies) => {
   cookies.remove('auth-session');
   window.location.replace('/logout');
 };
-
-const StyledHeader = styled.header`
-      padding-bottom: 8px;
-`;
 
 export const Header = ({ cookies }) => {
   const [userLoaded, setUserLoaded] = React.useState(false);

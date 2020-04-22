@@ -6,6 +6,7 @@ import {
 import {
   useFilters, useGlobalFilter, usePagination, useSortBy, useTable,
 } from 'react-table';
+import { StyledDdrTableRow } from '../../componentstylers/table-styles';
 
 const SortedColumnTitle = (column) => {
   let sortIcon = 'fa-sort';
@@ -124,9 +125,9 @@ export const DdrStatsTable = ({ columnSettings, rowData }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <StyledDdrTableRow {...row.getRowProps()} className={row.values.difficulty}>
                 {row.cells.map(cell => cell.render('Cell'))}
-              </tr>
+              </StyledDdrTableRow>
             );
           })}
         </tbody>

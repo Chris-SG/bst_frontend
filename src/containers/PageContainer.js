@@ -4,21 +4,20 @@ import PropTypes, { func } from 'prop-types';
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
 import CookiesProvider from 'react-cookie/cjs/CookiesProvider';
-import { BodySpan } from '../componentstylers/container-styles'
+import { GlobalStyle, StyledBody } from '../componentstylers/container-styles';
 
 const PageContainer = (props) => {
   const { render: View } = props;
   return (
     <>
-      <BodySpan>
-        <CookiesProvider>
-          <Header />
-        </CookiesProvider>
-        <Container fluid>
-          <View />
-        </Container>
-        <Footer />
-      </BodySpan>
+      <GlobalStyle />
+      <CookiesProvider>
+        <Header />
+      </CookiesProvider>
+      <StyledBody fluid>
+        <View />
+      </StyledBody>
+      <Footer />
     </>
   );
 };

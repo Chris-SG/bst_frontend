@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Badge from 'react-bootstrap/Badge';
+import { StyledFooter } from '../componentstylers/container-styles';
 
 export const Footer = () => {
   const [apiStatus, setApiStatus] = React.useState('unknown');
@@ -20,10 +21,13 @@ export const Footer = () => {
   });
 
   return (
-    <footer id="footer" className="container-fluid">
-        <span className={`bst-api-status-${apiStatus}`}>
-          <Badge className="ml-2" pill variant="secondary">BST API STATUS: {apiStatus}</Badge>
-        </span>
-    </footer>
+    <StyledFooter id="footer" className="container-fluid">
+      <span className={`bst-api-status-${apiStatus}`}>
+        <Badge className="ml-2" pill variant="secondary">
+          BST API STATUS:
+          {apiStatus}
+        </Badge>
+      </span>
+    </StyledFooter>
   );
 };
