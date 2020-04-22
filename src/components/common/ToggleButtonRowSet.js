@@ -3,15 +3,18 @@ import {
   Button, ButtonGroup, Dropdown, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledToggleButton = styled(ToggleButton)`
-  &&&&& {
+  &&&&&, &&&&&.focus, &&&&&.hover {
+    box-shadow: transparent;
     transition: background-color 0.3s ease;
-    background-color: 'blue';
-    ${props => (props.active && css`
-      background-color: 'purple'l
-    `)};
+    background-color: rgba(159, 74, 205, 0.66);
+    border-color: rgba(159, 74, 205, 0.88);
+  }
+  &&&&&.active {
+    background-color: rgb(140, 5, 213);
+    border-color: rgb(82, 1, 126);
   }
 `;
 
