@@ -3,11 +3,16 @@ import {
   Button, ButtonGroup, Dropdown, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledToggleButton = styled(ToggleButton)`
-  transition: background-color 0.3s ease;
-  background-color: ${props => (props.active ? 'purple' : 'blue')};
+  &&&&& {
+    transition: background-color 0.3s ease;
+    background-color: 'blue';
+    ${props => (props.active && css`
+      background-color: 'purple'l
+    `)};
+  }
 `;
 
 export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
