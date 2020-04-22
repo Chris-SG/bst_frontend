@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import {
   DdrStatsTable,
   CellRenderer,
-  DefaultCellRenderer, LevelCellRenderer
+  DefaultCellRenderer, LevelCellRenderer,
 } from '../../components/ddr/DdrStatsTable';
-import DdrStatsModeFilter from '../../components/ddr/DdrStatsModeFilter';
 import { DdrStatsDropdownFilter } from '../../components/ddr/DdrStatsDropdownFilter';
 
 const modeSortingAlg = (a, b) => {

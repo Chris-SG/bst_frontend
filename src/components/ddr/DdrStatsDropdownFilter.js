@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes, { arrayOf } from 'prop-types';
-import ToggleButtonRowSet from '../common/ToggleButtonRowSet';
+import PropTypes from 'prop-types';
+import { ToggleButtonRowSet } from '../common/ToggleButtonRowSet';
 
 export const DdrStatsDropdownFilter = ({
   column:

@@ -1,96 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, ButtonGroup, Dropdown, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import style from '../ddr/DdrStatsDropdownFilter.css';
+import styled from 'styled-components';
 
-class ToggleButtonRowSet extends React.Component {
-  constructor(props) {
-    super(props);
-    const { options } = this.props;
-    this.state = {
-      selectedOptions: options,
-    };
-  }
+const StyledToggleButton = styled(ToggleButton)`
+  transition: background-color 0.3s ease;
+  background-color: ${props => (props.active ? 'purple' : 'blue')};
+`;
 
-  onSelectionChanged() {
-    const { setFilter } = this.props;
-    const { selectedOptions } = this.state;
+export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
+  const [selectedOptions, setSelectedOptions] = useState(options);
+
+  useEffect(() => {
     setFilter(selectedOptions);
-  }
+  }, [selectedOptions]);
 
-  enableAll() {
-    const { options } = this.props;
-    this.setState({
-      selectedOptions: options,
-    }, this.onSelectionChanged);
-  }
+  const enableAll = (() => {
+    setSelectedOptions(options);
+  });
 
-  disableAll() {
-    this.setState({
-      selectedOptions: [null],
-    }, this.onSelectionChanged);
-  }
+  const disableAll = (() => {
+    setSelectedOptions([]);
+  });
 
-  buttonStyle(opt) {
-    const { selectedOptions } = this.state;
-    return (
-      {
-        background: selectedOptions.includes(opt) ? '#7700cc' : 'blue',
-        border: selectedOptions.includes(opt) ? '#9900aa' : 'blue',
-      }
-    );
-  }
-
-  render() {
-    const { selectedOptions } = this.state;
-    const {
-      options, title,
-    } = this.props;
-
-    return (
-      <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {title}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <div className="ml-2 mr-2">
-            <ToggleButtonGroup
-              type="checkbox"
-              defaultValue={options}
-              value={selectedOptions}
-              className={[style.ButtonGroup, 'mb-2'].join(' ')}
-              onChange={(e) => {
-                this.setState({
-                  selectedOptions: e,
-                }, this.onSelectionChanged);
-              }}
-              custom="true"
-            >
-              {
-                options.map((opt, i) => (
-                  <ToggleButton
-                    key={i + 1}
-                    value={opt}
-                    style={this.buttonStyle(opt)}
-                  >
-                    {opt}
-                  </ToggleButton>
-                ))
-              }
-            </ToggleButtonGroup>
-            <br />
-            <ButtonGroup className={style.ButtonGroup}>
-              <Button onClick={() => this.enableAll()}>All</Button>
-              <Button onClick={() => this.disableAll()}>Clear</Button>
-            </ButtonGroup>
-          </div>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  }
-}
+  return (
+    <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        {title}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <div className="ml-2 mr-2">
+          <ToggleButtonGroup
+            type="checkbox"
+            defaultValue={options}
+            value={selectedOptions}
+            className="mb-2"
+            onChange={(e) => {
+              setSelectedOptions(e);
+            }}
+            custom="true"
+          >
+            {
+              options.map((opt, i) => (
+                <StyledToggleButton
+                  key={i + 1}
+                  value={opt}
+                >
+                  {opt}
+                </StyledToggleButton>
+              ))
+            }
+          </ToggleButtonGroup>
+          <br />
+          <ButtonGroup>
+            <Button onClick={() => enableAll()}>All</Button>
+            <Button onClick={() => disableAll()}>Clear</Button>
+          </ButtonGroup>
+        </div>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
 ToggleButtonRowSet.defaultProps = {
   buttonsPerRow: 5,
@@ -102,5 +74,3 @@ ToggleButtonRowSet.propTypes = {
   buttonsPerRow: PropTypes.number,
   title: PropTypes.string.isRequired,
 };
-
-export default ToggleButtonRowSet;

@@ -10,7 +10,7 @@ const StyledChart = styled(Chart)`
  `;
 
 export const PlaycountGraph = ({ data, startingDate, endingDate }) => {
-  const chartWidth = '500';
+  const chartWidth = '380px';
   const chartType = 'bar';
   const chartSeries = [
     {

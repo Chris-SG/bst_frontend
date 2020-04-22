@@ -17,7 +17,7 @@ const loadRecentCallback = () => {
 };
 
 const StyledContainer = styled(Container)`
-    border-style: groove;
+    border-style: solid;
     border-radius: 8px;
     padding-top: 8px;
     padding-left: 8px;
@@ -26,6 +26,10 @@ const StyledContainer = styled(Container)`
     text-align: center;
     float: center;
     background-color: #CCCCCC;
+    max-width: 50%;
+    @media (max-width: 800px) {
+      max-width: 400px;
+    }
  `;
 
 const DdrProfile = () => {
