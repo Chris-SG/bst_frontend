@@ -8,7 +8,6 @@ const EaLoginStatus = (setLoginState, setName, setLoading) => {
   axios
     .get('/external/bst_api/eagate_login', {})
     .then((response) => {
-      console.log(response);
       setLoading(false);
       if (response.status !== 200 || response.data[0].length === 0) {
         setLoginState(false);

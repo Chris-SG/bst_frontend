@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
 
 export const UserDropdown = ({ user, cookies }) => {
   const [anchorMenu, setAnchorMenu] = React.useState(null);
@@ -82,6 +83,7 @@ const UserMenu = ({
       <a href="/user">
         <MenuItem>Profile</MenuItem>
       </a>
+      <Divider variant="middle" />
       <a href="/logout">
         <MenuItem onClick={() => clearCookie(cookies)}>Logout</MenuItem>
       </a>

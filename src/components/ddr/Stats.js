@@ -18,7 +18,6 @@ const loadStats = (setData, setLoading) => {
   axios
     .get('/external/bst_api/ddr_stats', {})
     .then((response) => {
-      console.log(response);
       setData(response.data);
       setLoading(false);
     })

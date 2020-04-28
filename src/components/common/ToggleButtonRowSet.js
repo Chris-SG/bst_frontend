@@ -26,8 +26,6 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
   const [selectedOptions, setSelectedOptions] = useState(options);
   const [popupOpen, setPopupOpen] = useState(false);
   const classes = useStyles();
-  console.log(Object.keys(options));
-  console.log(typeof Object.keys(options));
 
   useEffect(() => {
     setFilter(selectedOptions);

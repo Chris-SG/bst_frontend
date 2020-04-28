@@ -12,8 +12,6 @@ function DefaultColumnFilter() {
 }
 
 export const TableFilteringPanel = ({ columns }) => {
-  console.log(columns);
-  console.log(typeof columns[0]);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary
