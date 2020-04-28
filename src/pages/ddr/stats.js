@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from 'react-bootstrap';
-import axios from 'axios';
 import PageContainer from '../../containers/PageContainer';
-import DdrStatsContainer from '../../containers/ddr/DdrStatsContainer';
+import { Stats } from '../../components/ddr/Stats';
 
 ReactDOM.render(
-  <PageContainer render={DdrStatsContainer}>
+  <PageContainer render={Stats}>
   </PageContainer>, document.getElementById('root'),
 );

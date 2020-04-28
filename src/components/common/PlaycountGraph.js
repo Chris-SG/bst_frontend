@@ -1,15 +1,20 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { compareUTCDate } from '../../helpers/time';
 
-const StyledChart = styled(Chart)`
-    text-align: center;
-    float: center;
- `;
+const useStyles = makeStyles((theme) => ({
+  chart: {
+    textAlign: 'center',
+    display: 'inline',
+    float: 'none',
+    margin: 'auto',
+  },
+}));
 
 export const PlaycountGraph = ({ data, startingDate, endingDate }) => {
+  const classes = useStyles();
   const chartWidth = '380px';
   const chartType = 'bar';
   const chartSeries = [
@@ -78,7 +83,8 @@ export const PlaycountGraph = ({ data, startingDate, endingDate }) => {
 
   return (
     <>
-      <StyledChart
+      <Chart
+        className={classes.chart}
         options={chartOptions}
         series={chartSeries}
         type={chartType}

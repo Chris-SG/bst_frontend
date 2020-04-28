@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import Badge from 'react-bootstrap/Badge';
+import Chip from '@material-ui/core/Chip';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import clsx from 'clsx';
 
 const styles = makeStyles((theme) => ({
   footer: {
     marginTop: '40px',
-    borderTopStyle: 'solid',
     paddingBottom: '8px',
   },
   apiStatus: {
@@ -42,10 +41,11 @@ export const Footer = () => {
   return (
     <footer id="footer" className={clsx(classes.footer, 'container-fluid')}>
       <span>
-        <Badge className={clsx(classes.apiStatus, `bst-api-status-${apiStatus}`, 'ml-2')} pill variant="secondary">
-          BST API STATUS:
-          {apiStatus}
-        </Badge>
+        <Chip
+          label={`BST API STATUS: ${apiStatus}`}
+          className={clsx(classes.apiStatus, `bst-api-status-${apiStatus}`, 'ml-2')}
+          size="small"
+        />
       </span>
     </footer>
   );

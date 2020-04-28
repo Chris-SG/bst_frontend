@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 
 export const LoadButton = (
@@ -14,7 +15,7 @@ export const LoadButton = (
   <>
     {
       !isRefreshSuccessful
-        ? <Alert variant="danger">{failureText}</Alert>
+        ? <Alert severity="error">{failureText}</Alert>
         : ''
     }
     <Button

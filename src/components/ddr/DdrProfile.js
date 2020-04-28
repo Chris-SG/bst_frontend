@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import
-{
-  Col, Container, Row, Spinner,
-} from 'react-bootstrap';
-import styled from 'styled-components';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import clsx from 'clsx';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DdrLoadButton } from './DdrDataLoad';
 import { PlaycountGraphMemo } from '../common/PlaycountGraph';
 
@@ -16,26 +16,36 @@ const loadRecentCallback = () => {
   window.location.replace(window.location.href);
 };
 
-const StyledContainer = styled(Container)`
-    border-style: solid;
-    border-radius: 8px;
-    padding-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 8px;
-    text-align: center;
-    float: center;
-    background-color: #444444;
-    max-width: 50%;
-    @media (max-width: 800px) {
-      max-width: 400px;
-    }
- `;
+const useStyles = makeStyles((theme) => ({
+  profileContainer: {
+    borderStyle: 'solid',
+    borderRadius: 8,
+    paddingTop: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingBottom: 8,
+    textAlign: 'center',
+    float: 'center',
+    backgroundColor: '#444444',
+    maxWidth: '50%',
+    '@media (max-width: 800px)': {
+      maxWidth: 400,
+    },
+  },
+  graph: {
+    margin: 'auto',
+    float: 'none',
+    '& div': {
+      display: 'inline',
+    },
+  },
+}));
 
 const DdrProfile = () => {
   const [profile, setProfile] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLinked, setIsLinked] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     axios
@@ -71,9 +81,7 @@ const DdrProfile = () => {
 
   if (!isLoaded) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+      <CircularProgress />
     );
   }
 
@@ -99,11 +107,12 @@ const DdrProfile = () => {
   start.setUTCDate(today.getUTCDate() - 29);
 
   return (
-    <StyledContainer
+    <Container
       fluid="sm"
+      className={classes.profileContainer}
     >
-      <Row>
-        <Col>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
           <span
             style={{
               fontWeight: 'bold',
@@ -114,19 +123,17 @@ const DdrProfile = () => {
           </span>
           <br />
           {profile.Id}
-        </Col>
-      </Row>
-      <Row>
-        <div className="mixed-chart" style={{ margin: 'auto' }}>
-          <PlaycountGraphMemo
-            data={profile.WorkoutData}
-            startingDate={`${start.getUTCFullYear()}-${start.getUTCMonth() + 1}-${start.getUTCDate()}`}
-            endingDate={`${today.getUTCFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`}
-          />
-        </div>
-      </Row>
-      <Row>
-        <Col>
+        </Grid>
+        <Grid item xs={12}>
+          <div className={clsx('mixed-chart', classes.graph)}>
+            <PlaycountGraphMemo
+              data={profile.WorkoutData}
+              startingDate={`${start.getUTCFullYear()}-${start.getUTCMonth() + 1}-${start.getUTCDate()}`}
+              endingDate={`${today.getUTCFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={6}>
           <span>
             Load all your recent plays! This should be used if you have played less than 50 songs since last loading data.
           </span>
@@ -137,8 +144,8 @@ const DdrProfile = () => {
             callback={loadRecentCallback}
             failureText="Failed to load recent data."
           />
-        </Col>
-        <Col>
+        </Grid>
+        <Grid item xs={6}>
           <span>
             Load your whole history! This should be used if you have played more than 50 songs since last loading data.
           </span>
@@ -149,9 +156,9 @@ const DdrProfile = () => {
             callback={loadAllCallback}
             failureText="Failed to load all data."
           />
-        </Col>
-      </Row>
-    </StyledContainer>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
