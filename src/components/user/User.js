@@ -15,7 +15,7 @@ const EaLoginStatus = (setLoginState, setName, setLoading) => {
         setName(null);
         return;
       }
-      if (response.data[0].expired === true) {
+      if (response.data[0].Expired === true) {
         setLoginState(false);
         setName(response.data[0].username);
         return;
@@ -37,7 +37,6 @@ export const UserPage = () => {
   const [reloadLoginStatus, setReloadLoginStatus] = React.useState(false);
 
   useEffect(() => {
-    console.log("effect");
     EaLoginStatus(setLoginState, setName, setLoading);
   }, [reloadLoginStatus]);
 
