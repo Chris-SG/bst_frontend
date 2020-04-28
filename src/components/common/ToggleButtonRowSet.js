@@ -1,29 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button, ButtonGroup, Dropdown, ToggleButton, ToggleButtonGroup,
-} from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import Popover from '@material-ui/core/Popover';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-const StyledToggleButton = styled(ToggleButton)`
-  &&&&&, &&&&&.focus, &&&&&.hover {
-    box-shadow: transparent;
-    transition: background-color 0.3s ease;
-    background-color: rgba(159, 74, 205, 0.66);
-    border-color: rgba(159, 74, 205, 0.88);
-  }
-  &&&&&.active {
-    background-color: rgb(140, 5, 213);
-    border-color: rgb(82, 1, 126);
-  }
-`;
+const useStyles = makeStyles(theme => ({
+  filterButton: {
+    '&.focus &.hover': {
+      boxShadow: 'transparent',
+      transition: 'background-color 0.3s ease',
+      backgroundColor: 'rgba(159, 74, 205, 0.66)',
+      borderColor: 'rgba(159, 74, 205, 0.88)',
+    },
+    '&.active': {
+      backgroundColor: 'rgb(140, 5, 213)',
+      borderColor: 'rgb(82, 1, 126)',
+    },
+  },
+}));
 
 export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
   const [selectedOptions, setSelectedOptions] = useState(options);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const classes = useStyles();
+  console.log(Object.keys(options));
+  console.log(typeof Object.keys(options));
 
   useEffect(() => {
     setFilter(selectedOptions);
   }, [selectedOptions]);
+
+  const containsValue = (v) => {
+    return selectedOptions.indexOf(v) === -1;
+  };
+
+  const toggleValue = (v) => {
+    if (!containsValue(v)) {
+      setSelectedOptions([...selectedOptions, v]);
+      return;
+    }
+    setSelectedOptions(selectedOptions.splice(selectedOptions.indexOf(v), 1));
+  };
 
   const enableAll = (() => {
     setSelectedOptions(options);
@@ -34,11 +54,22 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
   });
 
   return (
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <>
+      <Button onClick={() => setPopupOpen(!popupOpen)}>
         {title}
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
+      </Button>
+      <Popover
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+      >
         <div className="ml-2 mr-2">
           <ToggleButtonGroup
             type="checkbox"
@@ -51,24 +82,26 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
             custom="true"
           >
             {
-              options.map((opt, i) => (
-                <StyledToggleButton
-                  key={i + 1}
-                  value={opt}
+              options.map((opt) => (
+                <ToggleButton
+                  className={classes.toggleButton}
+                  key={opt}
+                  value={containsValue(opt)}
+                  onChange={() => toggleValue(opt)}
                 >
                   {opt}
-                </StyledToggleButton>
+                </ToggleButton>
               ))
             }
           </ToggleButtonGroup>
           <br />
           <ButtonGroup>
-            <Button onClick={() => enableAll()}>All</Button>
-            <Button onClick={() => disableAll()}>Clear</Button>
+            <Button onClick={() => enableAll()} className={classes.filterButton} color="secondary">All</Button>
+            <Button onClick={() => disableAll()} className={classes.filterButton} color="secondary">Clear</Button>
           </ButtonGroup>
         </div>
-      </Dropdown.Menu>
-    </Dropdown>
+      </Popover>
+    </>
   );
 };
 

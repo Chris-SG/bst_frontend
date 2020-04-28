@@ -35,7 +35,6 @@ export const DdrLoadButton = ({
   const [isLoading, setIsLoading] = React.useState(false);
   const [isRefreshSuccessful, setIsRefreshSuccessful] = React.useState(true);
 
-  console.log(callback);
   useEffect(() => {
   }, []);
 

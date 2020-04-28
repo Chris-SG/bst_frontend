@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ToggleButtonRowSet } from '../common/ToggleButtonRowSet';
 
@@ -39,5 +39,4 @@ export default DdrStatsDropdownFilter;
 DdrStatsDropdownFilter.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
   title: PropTypes.string.isRequired,
-  rows: PropTypes.objectOf(PropTypes.any).isRequired,
 };

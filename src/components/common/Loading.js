@@ -1,12 +1,6 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
-import Styled from 'styled-components';
-
-const StyledSpinner = Styled(Spinner)`
-  color: #990099;
-  
-`;
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const Loading = () => (
-  <StyledSpinner animation="grow" />
+  <CircularProgress />
 );
