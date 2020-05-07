@@ -25,7 +25,7 @@ export const TableFilteringPanel = ({ columns }) => {
         <Grid container spacing={3}>
           {
             columns.map(column => (column.canFilter && column.Filter !== DefaultColumnFilter
-              ? <Grid item xs><div key={column.id}>{column.render('Filter', { title: column.filterTitle })}</div></Grid>
+              ? <Grid item xs key={column.id}><div>{column.render('Filter')}</div></Grid>
               : ''))
           }
         </Grid>
@@ -35,5 +35,5 @@ export const TableFilteringPanel = ({ columns }) => {
 };
 
 TableFilteringPanel.propTypes = {
-  columns: PropTypes.objectOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

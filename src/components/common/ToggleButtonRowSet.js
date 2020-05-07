@@ -20,27 +20,25 @@ const useStyles = makeStyles(theme => ({
       borderColor: 'rgb(82, 1, 126)',
     },
   },
+  toggleButton: {
+    backgroundColor: '#cccc00',
+    '&.active': {
+      backgroundColor: '#00cc00',
+    },
+  },
 }));
 
 export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
   const [selectedOptions, setSelectedOptions] = useState(options);
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [filterAnchor, setFilterAnchor] = useState(null);
   const classes = useStyles();
 
   useEffect(() => {
     setFilter(selectedOptions);
   }, [selectedOptions]);
 
-  const containsValue = (v) => {
-    return selectedOptions.indexOf(v) === -1;
-  };
-
-  const toggleValue = (v) => {
-    if (!containsValue(v)) {
-      setSelectedOptions([...selectedOptions, v]);
-      return;
-    }
-    setSelectedOptions(selectedOptions.splice(selectedOptions.indexOf(v), 1));
+  const handleChange = (e, selection) => {
+    setSelectedOptions(selection);
   };
 
   const enableAll = (() => {
@@ -51,12 +49,22 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
     setSelectedOptions([]);
   });
 
+  const togglePopover = (e) => {
+    if (filterAnchor === null) {
+      setFilterAnchor(e.currentTarget);
+    } else {
+      setFilterAnchor(null);
+    }
+  };
+  const popupOpen = filterAnchor !== null;
+
   return (
     <>
-      <Button onClick={() => setPopupOpen(!popupOpen)}>
+      <Button onClick={togglePopover}>
         {title}
       </Button>
       <Popover
+        anchorEl={filterAnchor}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
@@ -66,7 +74,7 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
           horizontal: 'left',
         }}
         open={popupOpen}
-        onClose={() => setPopupOpen(false)}
+        onClose={togglePopover}
       >
         <div className="ml-2 mr-2">
           <ToggleButtonGroup
@@ -74,18 +82,15 @@ export const ToggleButtonRowSet = ({ title, options, setFilter }) => {
             defaultValue={options}
             value={selectedOptions}
             className="mb-2"
-            onChange={(e) => {
-              setSelectedOptions(e);
-            }}
+            onChange={handleChange}
             custom="true"
           >
             {
-              options.map((opt) => (
+              options.map(opt => (
                 <ToggleButton
                   className={classes.toggleButton}
+                  value={opt}
                   key={opt}
-                  value={containsValue(opt)}
-                  onChange={() => toggleValue(opt)}
                 >
                   {opt}
                 </ToggleButton>

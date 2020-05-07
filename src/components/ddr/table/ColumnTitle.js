@@ -1,9 +1,39 @@
 import { DefaultCellRenderer } from './DdrStatsTable';
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles((theme) => ({
+  cell: {
+    whiteSpace: 'nowrap',
+    width: '200px',
+  },
+}));
+
+const TitleCellRenderer = (instance) => {
+  const classes = useStyles();
+  return (
+    <td
+      {...instance.cell.getCellProps()}
+    >
+      <Tooltip title={instance.cell.value} arrow>
+        <Box
+          textOverflow="ellipsis"
+          overflow="hidden"
+          className={classes.cell}
+        >
+          {instance.cell.value}
+        </Box>
+      </Tooltip>
+    </td>
+  );
+};
 
 export const titleColumnDetails = () => (
   {
     Header: 'Song Name',
     accessor: 'title',
-    Cell: DefaultCellRenderer,
+    Cell: TitleCellRenderer,
   }
 );

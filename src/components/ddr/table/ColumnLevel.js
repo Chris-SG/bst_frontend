@@ -4,6 +4,11 @@ import clsx from 'clsx';
 import { DdrStatsDropdownFilter } from '../DdrStatsDropdownFilter';
 
 const useStyles = makeStyles((theme) => ({
+  cell: {
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    width: '30px',
+  },
   level: {
     '&.BEGINNER': {
       color: 'aqua',
@@ -25,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const LevelCellRenderer = (instance) => {
   const classes = useStyles();
-
+  console.log(instance.cell.getCellProps());
   return (
     <td
       {...instance.cell.getCellProps()}
-      className={clsx(classes.level, instance.cell.row.values.difficulty)}
+      className={clsx(classes.cell, classes.level, instance.cell.row.values.difficulty)}
     >
       {instance.cell.value}
     </td>

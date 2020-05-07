@@ -6,13 +6,15 @@ import { DdrTableHeader } from './DdrTableHeader';
 import { DdrTableBody } from './DdrTableBody';
 import { DdrTablePagination } from './DdrTablePagination';
 
-export const DefaultCellRenderer = instance => (
-  <td
-    {...instance.cell.getCellProps()}
-  >
-    {instance.cell.value}
-  </td>
-);
+export const DefaultCellRenderer = (instance) => {
+  return (
+    <td
+      {...instance.cell.getCellProps()}
+    >
+      {instance.cell.value}
+    </td>
+  );
+};
 
 function DefaultColumnFilter() {
   return ('');

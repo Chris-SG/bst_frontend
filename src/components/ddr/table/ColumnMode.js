@@ -1,7 +1,7 @@
 import { DdrStatsDropdownFilter } from '../DdrStatsDropdownFilter';
 import { DefaultCellRenderer } from './DdrStatsTable';
 
-export const modeSortingAlg = (a, b) => {
+const modeSortingAlg = (a, b) => {
   if (a === b) return 0;
 
   const modeDict = {
@@ -11,7 +11,7 @@ export const modeSortingAlg = (a, b) => {
   return modeDict[a] < modeDict[b] ? -1 : 1;
 };
 
-export const modeSorting = (a, b) => {
+const modeSorting = (a, b) => {
   if (b.values === undefined) return -1;
   if (a.values === undefined) return 1;
   return modeSortingAlg(a.values.mode, b.values.mode);

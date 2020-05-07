@@ -34,7 +34,8 @@ const loadStats = (setData, setLoading) => {
         "score": 0,
         "playcount": 0,
         "clearcount": 0,
-        "maxcombo": 0
+        "maxcombo": 0,
+        "id": "abc"
     },
     {
         "level": 2,
@@ -42,12 +43,13 @@ const loadStats = (setData, setLoading) => {
         "artist": "kors k",
         "mode": "SINGLE",
         "difficulty": "BASIC",
-        "lamp": "",
+        "lamp": "グレートフルコンボ",
         "rank": "",
         "score": 0,
         "playcount": 0,
         "clearcount": 0,
-        "maxcombo": 0
+        "maxcombo": 0,
+        "id": "def"
     },
     {
         "level": 3,
@@ -55,12 +57,13 @@ const loadStats = (setData, setLoading) => {
         "artist": "U1 feat. Tammy S. Hansen",
         "mode": "SINGLE",
         "difficulty": "DIFFICULT",
-        "lamp": "",
+        "lamp": "グッドフルコンボ",
         "rank": "",
         "score": 0,
         "playcount": 0,
         "clearcount": 0,
-        "maxcombo": 0
+        "maxcombo": 0,
+        "id": "123"
     },
     {
         "level": 4,
@@ -73,7 +76,8 @@ const loadStats = (setData, setLoading) => {
         "score": 0,
         "playcount": 0,
         "clearcount": 0,
-        "maxcombo": 0
+        "maxcombo": 0,
+        "id": "456"
     },
     {
         "level": 5,
@@ -86,7 +90,8 @@ const loadStats = (setData, setLoading) => {
         "score": 0,
         "playcount": 0,
         "clearcount": 0,
-        "maxcombo": 0
+        "maxcombo": 0,
+        "id": "abc123"
     }]`);
       setData(d);
       console.log(error);
