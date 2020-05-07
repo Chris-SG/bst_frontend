@@ -26,7 +26,7 @@ export const Footer = () => {
 
   React.useEffect(() => {
     axios
-      .get('/external/bst_api/status', {})
+      .get('/external/api/status', {})
       .then((response) => {
         setApiStatus(response.data.api);
         if (response.status === 404) {

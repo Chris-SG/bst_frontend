@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const loadScores = (callback, setLoadingState, setSuccessState, songId, mode, diff) => {
-  const url = '/external/bst_api/ddr/song/scores';
+  const url = '/external/api/ddr/song/scores';
   axios({
     method: 'get',
     url,
@@ -89,6 +89,7 @@ export const DdrTableRow = ({ row }) => {
 
   const openCollapse = () => {
     if (!scoresLoaded) {
+      console.log(row);
       setScoresLoaded(true);
       setLoadingState(true);
       loadScores(

@@ -49,7 +49,7 @@ const DdrProfile = () => {
 
   useEffect(() => {
     axios
-      .get('/external/bst_api/ddr_profile', {})
+      .get('/external/api/ddr/profile', {})
       .then((response) => {
         if (response.status === 200) {
           setProfile(response.data);
@@ -94,7 +94,7 @@ const DdrProfile = () => {
         <br />
         <DdrLoadButton
           buttonText="Load All Scores"
-          url="/external/bst_api/ddr_refresh"
+          url="/external/api/ddr/refresh"
           callback={loadAllCallback}
           failureText="Failed to load all data."
         />
@@ -140,7 +140,7 @@ const DdrProfile = () => {
           <br />
           <DdrLoadButton
             buttonText="Load Recent Scores"
-            url="/external/bst_api/ddr_update"
+            url="/external/api/ddr/profile/update"
             callback={loadRecentCallback}
             failureText="Failed to load recent data."
           />
@@ -152,7 +152,7 @@ const DdrProfile = () => {
           <br />
           <DdrLoadButton
             buttonText="Load All Scores"
-            url="/external/bst_api/ddr_refresh"
+            url="/external/api/ddr/profile/refresh"
             callback={loadAllCallback}
             failureText="Failed to load all data."
           />

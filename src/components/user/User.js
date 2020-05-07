@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 const EaLoginStatus = (setLoginState, setName, setLoading) => {
   axios
-    .get('/external/bst_api/eagate_login', {})
+    .get('/external/api/eagate/login', {})
     .then((response) => {
       setLoading(false);
       if (response.status !== 200 || response.data[0].length === 0) {
@@ -45,7 +45,7 @@ export const UserPage = () => {
     };
 
     axios
-      .post('/external/bst_api/eagate_logout', JSON.stringify(jsonData), {
+      .post('/external/api/eagate/logout', JSON.stringify(jsonData), {
         responseType: 'json',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',

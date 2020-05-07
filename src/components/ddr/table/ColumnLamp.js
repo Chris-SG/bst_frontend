@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     whiteSpace: 'nowrap',
     width: '70px',
-    color: '#555555',
+    color: 'rgba(0, 0, 0, 0.0)',
     '&.gfc': {
       color: '#00cc00',
     },
@@ -21,16 +21,23 @@ const useStyles = makeStyles((theme) => ({
     '&.clear': {
       color: '#ffff00',
     },
+    '&.failed': {
+      color: '#555555',
+    },
   },
 }));
 
-const LampType = (lampName) => {
+const LampType = (lampName, clearStatus) => {
   const lamps = {
     グレートフルコンボ: 'gfc',
     グッドフルコンボ: 'fc',
     '---': 'clear',
   };
-  return lamps[lampName];
+  let lamp = lamps[lampName];
+  if (clearStatus === false) {
+    lamp = 'failed';
+  }
+  return lamp;
 };
 
 const LampCellRenderer = (instance) => {
@@ -42,7 +49,8 @@ const LampCellRenderer = (instance) => {
     >
       <Tooltip title={instance.cell.value} arrow>
         <Box
-          className={clsx(LampType(instance.cell.value), classes.cell)}
+          className={clsx(LampType(instance.cell.value,
+            instance.row.values.rank !== 'E'), classes.cell)}
         >
           <AlbumIcon />
         </Box>

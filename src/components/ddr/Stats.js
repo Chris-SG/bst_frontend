@@ -16,7 +16,7 @@ import { DdrStatsTable } from './table/DdrStatsTable';
 
 const loadStats = (setData, setLoading) => {
   axios
-    .get('/external/bst_api/ddr_stats', {})
+    .get('/external/api/ddr/stats', {})
     .then((response) => {
       setData(response.data);
       setLoading(false);

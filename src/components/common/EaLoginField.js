@@ -52,7 +52,7 @@ export const EaLoginForm = ({ preRequest, postRequest, loginName }) => {
     const submission = loginRequestData();
 
     axios
-      .post('/external/bst_api/eagate_login', submission, {
+      .post('/external/api/eagate/login', submission, {
         responseType: 'json',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
