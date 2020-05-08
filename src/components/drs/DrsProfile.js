@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { PlaycountGraphMemo } from '../common/PlaycountGraph';
+import { DrsLoadButton } from './DrsDataLoad';
 
 const loadAllCallback = () => {
   window.location.replace(window.location.href);
@@ -48,7 +49,7 @@ const DdrProfile = () => {
 
   useEffect(() => {
     axios
-      .get('/external/bst_api/ddr_profile', {})
+      .get('/external/api/drs/details', {})
       .then((response) => {
         if (response.status === 200) {
           setProfile(response.data);
@@ -61,22 +62,11 @@ const DdrProfile = () => {
       })
       .catch((error) => {
         console.log(error);
-        setProfile(JSON.parse(`{
-          "Name": "BAUXE",
-          "Id": 41316566,
-          "WorkoutData": [
-            {"Date":"2020-3-25","Playcount":15},
-            {"Date":"2020-4-1","Playcount":23},
-            {"Date":"2020-4-5","Playcount":66},
-            {"Date":"2020-4-13","Playcount":1},
-            {"Date":"2020-4-16","Playcount":23},
-            {"Date":"2020-4-19","Playcount":5}
-           ]
-        }`));
         setIsLoaded(true);
-        setIsLinked(true);
+        setIsLinked(false);
       });
   }, []);
+  console.log(profile);
 
   if (!isLoaded) {
     return (
@@ -87,23 +77,19 @@ const DdrProfile = () => {
   if (!isLinked) {
     return (
       <>
-        <span>Your account has not yet been linked to a DDR profile.</span>
+        <span>Your account has not yet been linked to a DRS profile.</span>
         <br />
         <span>To link your profile, click the button below to load your profile.</span>
         <br />
-        <DdrLoadButton
+        <DrsLoadButton
           buttonText="Load All Scores"
-          url="/external/bst_api/ddr_refresh"
+          url="/external/api/drs/profile"
           callback={loadAllCallback}
           failureText="Failed to load all data."
         />
       </>
     );
   }
-
-  const today = new Date();
-  const start = new Date();
-  start.setUTCDate(today.getUTCDate() - 29);
 
   return (
     <Container
@@ -118,42 +104,21 @@ const DdrProfile = () => {
               fontSize: '2em',
             }}
           >
-            {profile.Name}
+            {profile.name}
           </span>
           <br />
-          {profile.Id}
+          {profile.code}
         </Grid>
         <Grid item xs={12}>
-          <div className={clsx('mixed-chart', classes.graph)}>
-            <PlaycountGraphMemo
-              data={profile.WorkoutData}
-              startingDate={`${start.getUTCFullYear()}-${start.getUTCMonth() + 1}-${start.getUTCDate()}`}
-              endingDate={`${today.getUTCFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`}
-            />
-          </div>
-        </Grid>
-        <Grid item xs={6}>
           <span>
-            Load all your recent plays! This should be used if you have played less than 50 songs since last loading data.
+            Click below to update your play data!.
           </span>
           <br />
-          <DdrLoadButton
+          <DrsLoadButton
             buttonText="Load Recent Scores"
-            url="/external/bst_api/ddr_update"
+            url="/external/api/drs/profile"
             callback={loadRecentCallback}
             failureText="Failed to load recent data."
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <span>
-            Load your whole history! This should be used if you have played more than 50 songs since last loading data.
-          </span>
-          <br />
-          <DdrLoadButton
-            buttonText="Load All Scores"
-            url="/external/bst_api/ddr_refresh"
-            callback={loadAllCallback}
-            failureText="Failed to load all data."
           />
         </Grid>
       </Grid>

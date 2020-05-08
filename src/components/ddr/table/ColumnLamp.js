@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     width: '70px',
     color: 'rgba(0, 0, 0, 0.0)',
+    '&.mfc': {
+      color: '#ffffff',
+    },
+    '&.pfc': {
+      color: '#ffff99',
+    },
     '&.gfc': {
       color: '#00cc00',
     },
@@ -19,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
       color: '#00cccc',
     },
     '&.clear': {
-      color: '#ffff00',
+      color: '#aaaa00',
     },
     '&.failed': {
       color: '#555555',
@@ -29,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LampType = (lampName, clearStatus) => {
   const lamps = {
+    パーフェクトフルコンボ: 'pfc',
     グレートフルコンボ: 'gfc',
     グッドフルコンボ: 'fc',
     '---': 'clear',

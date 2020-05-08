@@ -86,6 +86,24 @@ export const NavDrawer = ({ open, dimensions }) => {
           </ListItem>
         </Collapse>
         <ListItem>
+          <ListItemIcon>
+            <a href="/drs">
+              <OpenWithIcon />
+            </a>
+          </ListItemIcon>
+          <a href="/drs">
+            <ListItemText primary="DRS" />
+          </a>
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <ListItem>
+            <ListItemIcon />
+            <a href="/drs/stats">
+              <ListItemText primary="Stats" />
+            </a>
+          </ListItem>
+        </Collapse>
+        <ListItem>
           <ListItemIcon><AccountCircle /></ListItemIcon>
           <ListItemText primary="abc" />
         </ListItem>
