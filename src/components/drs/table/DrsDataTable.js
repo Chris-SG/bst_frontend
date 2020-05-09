@@ -21,6 +21,7 @@ function DefaultColumnFilter() {
 }
 
 export const DrsDataTable = ({ inputColumns, inputRows }) => {
+  console.log(inputColumns, inputRows);
   const c = useMemo(() => inputColumns, [inputColumns]);
   const r = useMemo(() => inputRows, [inputRows]);
   const defaultColumn = React.useMemo(() => ({ Filter: DefaultColumnFilter }), []);
