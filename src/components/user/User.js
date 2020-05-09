@@ -41,7 +41,7 @@ export const UserPage = () => {
 
   const EaLogout = () => {
     const jsonData = {
-      name,
+      username: name,
     };
 
     axios
