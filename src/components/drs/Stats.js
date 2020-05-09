@@ -13,7 +13,7 @@ import { friendStatsColumnDetails } from './table/ColumnFriendStats';
 
 const loadStats = (setData, setLoading) => {
   axios
-    .get('/external/api/drs/details', {})
+    .get('/external/api/drs/tabledata', {})
     .then((response) => {
       setData(response.data);
       setLoading(false);
