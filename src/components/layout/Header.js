@@ -46,7 +46,7 @@ export const Header = ({ drawerControl, dimensions }) => {
         if (response.status === 200) {
           setUserLoaded(true);
           setUser(response.data.nickname);
-          return
+          return;
         }
         setUserLoaded(true);
       })
