@@ -1,7 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const Header = ({ cookies, drawerControl, dimensions }) => {
+export const Header = ({ drawerControl, dimensions }) => {
   const [userLoaded, setUserLoaded] = React.useState(true);
   const [user, setUser] = React.useState('');
   const classes = useStyles({ dimensions });
@@ -69,7 +68,7 @@ export const Header = ({ cookies, drawerControl, dimensions }) => {
             </Typography>
           </span>
           <span className={classes.right}>
-            { userLoaded ? <UserDropdown user={user} cookies={cookies} /> : <CircularProgress /> }
+            { userLoaded ? <UserDropdown user={user} /> : <CircularProgress /> }
           </span>
         </Toolbar>
       </AppBar>
@@ -78,11 +77,6 @@ export const Header = ({ cookies, drawerControl, dimensions }) => {
 };
 
 Header.propTypes = {
-  cookies: PropTypes.instanceOf(Cookies),
   drawerControl: PropTypes.func.isRequired,
   dimensions: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-Header.defaultProps = {
-  cookies: null,
 };

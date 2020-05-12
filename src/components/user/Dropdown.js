@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
-import { Cookies } from 'react-cookie';
+import { Cookies, CookiesProvider } from 'react-cookie';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 
-export const UserDropdown = ({ user, cookies }) => {
+export const UserDropdown = ({ user }) => {
   const [anchorMenu, setAnchorMenu] = React.useState(null);
   const dropdownOpen = Boolean(anchorMenu);
 
@@ -25,25 +25,24 @@ export const UserDropdown = ({ user, cookies }) => {
       <IconButton onClick={handleMenu}>
         <AccountCircle />
       </IconButton>
-      <UserMenu
-        anchor={anchorMenu}
-        setAnchor={setAnchorMenu}
-        menuOpen={dropdownOpen}
-        user={user}
-        cookies={cookies}
-      />
+      <CookiesProvider>
+        <UserMenu
+          anchor={anchorMenu}
+          setAnchor={setAnchorMenu}
+          menuOpen={dropdownOpen}
+          user={user}
+        />
+      </CookiesProvider>
     </div>
   );
 };
 
 UserDropdown.defaultProps = {
   user: '',
-  cookies: null,
 };
 
 UserDropdown.propTypes = {
   user: PropTypes.string,
-  cookies: PropTypes.instanceOf(Cookies),
 };
 
 const UserMenu = ({

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CookiesProvider from 'react-cookie/cjs/CookiesProvider';
 import { ThemeProvider } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
@@ -58,9 +57,7 @@ const PageContainer = (props) => {
 
   return (
     <ThemeProvider theme={getTheme()}>
-      <CookiesProvider>
-        <Header drawerControl={toggleDrawer} dimensions={dimensions} />
-      </CookiesProvider>
+      <Header drawerControl={toggleDrawer} dimensions={dimensions} />
       <NavDrawer open={drawerOpen} dimensions={dimensions} />
       <Container
         className={clsx(classes.root, {
