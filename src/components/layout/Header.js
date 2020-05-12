@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Header = ({ drawerControl, dimensions }) => {
-  const [userLoaded, setUserLoaded] = React.useState(true);
+  const [userLoaded, setUserLoaded] = React.useState(false);
   const [user, setUser] = React.useState('');
   const classes = useStyles({ dimensions });
 
@@ -43,8 +43,12 @@ export const Header = ({ drawerControl, dimensions }) => {
     axios
       .get('/whoami', {})
       .then((response) => {
+        if (response.status === 200) {
+          setUserLoaded(true);
+          setUser(response.data.nickname);
+          return
+        }
         setUserLoaded(true);
-        setUser(response.data);
       })
       .catch(() => {
         setUserLoaded(false);
