@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
-import { Cookies, CookiesProvider } from 'react-cookie';
+import { withCookies, Cookies } from 'react-cookie';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -25,14 +25,12 @@ export const UserDropdown = ({ user }) => {
       <IconButton onClick={handleMenu}>
         <AccountCircle />
       </IconButton>
-      <CookiesProvider>
-        <UserMenu
-          anchor={anchorMenu}
-          setAnchor={setAnchorMenu}
-          menuOpen={dropdownOpen}
-          user={user}
-        />
-      </CookiesProvider>
+      <UserMenuWithCookies
+        anchor={anchorMenu}
+        setAnchor={setAnchorMenu}
+        menuOpen={dropdownOpen}
+        user={user}
+      />
     </div>
   );
 };
@@ -52,8 +50,8 @@ const UserMenu = ({
   user,
   cookies,
 }) => {
-  const clearCookie = (c) => {
-    c.remove('auth-session');
+  const clearCookie = () => {
+    cookies.remove('auth-session');
     window.location.replace('/logout');
   };
 
@@ -84,7 +82,7 @@ const UserMenu = ({
       </a>
       <Divider variant="middle" />
       <a href="/logout">
-        <MenuItem onClick={() => clearCookie(cookies)}>Logout</MenuItem>
+        <MenuItem onClick={() => clearCookie()}>Logout</MenuItem>
       </a>
     </Menu>
   );
@@ -97,10 +95,11 @@ UserMenu.propTypes = {
   setAnchor: PropTypes.func.isRequired,
   menuOpen: PropTypes.bool.isRequired,
   user: PropTypes.string.isRequired,
-  cookies: PropTypes.instanceOf(Cookies),
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
 };
 
 UserMenu.defaultProps = {
   anchor: null,
-  cookies: null,
 };
+
+const UserMenuWithCookies = withCookies(UserMenu);

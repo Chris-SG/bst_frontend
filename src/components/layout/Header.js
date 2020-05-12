@@ -45,6 +45,9 @@ export const Header = ({ drawerControl, dimensions }) => {
       .then((response) => {
         setUserLoaded(true);
         setUser(response.data);
+      })
+      .catch(() => {
+        setUserLoaded(false);
       });
   }, []);
 

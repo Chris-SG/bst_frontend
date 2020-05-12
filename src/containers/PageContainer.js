@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
+import { CookiesProvider } from 'react-cookie';
 import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
 import { getTheme } from '../themes/bst-theme';
@@ -56,20 +57,22 @@ const PageContainer = (props) => {
   };
 
   return (
-    <ThemeProvider theme={getTheme()}>
-      <Header drawerControl={toggleDrawer} dimensions={dimensions} />
-      <NavDrawer open={drawerOpen} dimensions={dimensions} />
-      <Container
-        className={clsx(classes.root, {
-          [classes.bodyShift]: drawerOpen,
-          [classes.body]: !drawerOpen,
-        })}
-      >
-        <View />
-        <Footer />
-      </Container>
-      <CssBaseline />
-    </ThemeProvider>
+    <CookiesProvider>
+      <ThemeProvider theme={getTheme()}>
+        <Header drawerControl={toggleDrawer} dimensions={dimensions} />
+        <NavDrawer open={drawerOpen} dimensions={dimensions} />
+        <Container
+          className={clsx(classes.root, {
+            [classes.bodyShift]: drawerOpen,
+            [classes.body]: !drawerOpen,
+          })}
+        >
+          <View />
+          <Footer />
+        </Container>
+        <CssBaseline />
+      </ThemeProvider>
+    </CookiesProvider>
   );
 };
 
