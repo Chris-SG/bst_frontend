@@ -8,19 +8,92 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import Backdrop from '@material-ui/core/Backdrop';
+import Paper from '@material-ui/core/Paper';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
+import { Loading } from '../common/Loading';
 
-export const UserDropdown = ({ user, loggedIn }) => {
+const useStyles = makeStyles(theme => ({
+  setNickname: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(3),
+      width: theme.spacing(32),
+      height: theme.spacing(24),
+    },
+  },
+}));
+
+export const UserDropdown = ({ user, setUser, loggedIn }) => {
   const [anchorMenu, setAnchorMenu] = React.useState(null);
+  const [nicknameBox, setNicknameBox] = React.useState('');
+  const [nicknameChanging, setNicknameChanging] = React.useState(false);
   const dropdownOpen = Boolean(anchorMenu);
+  const classes = useStyles();
 
   if (!loggedIn) {
     return <Button href="/login">Login</Button>;
   }
 
+  const SetNickname = () => {
+    setNicknameChanging(true);
+    const submission = {
+      nickname: nicknameBox,
+    };
+
+    axios
+      .put('/external/api/bstuser', submission, {
+        responseType: 'json',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      })
+      .then((response) => {
+        setUser(response.nickname);
+      }).catch(() => {
+        console.log('bstuser error');
+      });
+    return false;
+  };
+
   if (user === '') {
     return (
-      <Backdrop>
-        <AccountCircle />
+      <Backdrop open>
+        <Paper elevation={3} className={classes.setNickname}>
+          { nicknameChanging ? <Loading />
+            : (
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Typography>
+                    Hey, seems you don&apos;t have a nickname yet!
+                    That&apos;s alright, what do you want to be known as?
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <form
+                    autoComplete="off"
+                    noValidate
+                    onSubmit={
+                  (e) => {
+                    /**
+                     * Prevent submit from reloading the page
+                     */
+                    e.preventDefault();
+                    e.stopPropagation();
+                    SetNickname();
+                  }}
+                  >
+                    <TextField id="nickname" label="standard" value={nicknameBox} onChange={e => setNicknameBox(e.target.value)} />
+                  </form>
+                </Grid>
+              </Grid>
+            )
+          }
+        </Paper>
       </Backdrop>
     );
   }
@@ -44,13 +117,10 @@ export const UserDropdown = ({ user, loggedIn }) => {
   );
 };
 
-UserDropdown.defaultProps = {
-  user: '',
-};
-
 UserDropdown.propTypes = {
-  user: PropTypes.string,
-  loggedIn: PropTypes.bool,
+  user: PropTypes.string.isRequired,
+  setUser: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
 };
 
 const UserMenu = ({

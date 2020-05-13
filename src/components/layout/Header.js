@@ -54,7 +54,9 @@ export const Header = ({ drawerControl, dimensions }) => {
         setUserLoaded(true);
       })
       .catch(() => {
-        setUserLoaded(false);
+        setLoggedIn(true);
+        setUserLoaded(true);
+        setUser('');
       });
   }, []);
 
@@ -78,7 +80,7 @@ export const Header = ({ drawerControl, dimensions }) => {
             </Typography>
           </span>
           <span className={classes.right}>
-            { userLoaded ? <UserDropdown user={user} loggedIn={loggedIn} /> : <CircularProgress /> }
+            { userLoaded ? <UserDropdown user={user} setUser={setUser} loggedIn={loggedIn} /> : <CircularProgress /> }
           </span>
         </Toolbar>
       </AppBar>
