@@ -42,7 +42,11 @@ export const Header = ({ drawerControl, dimensions }) => {
 
   React.useEffect(() => {
     axios
-      .get('/whoami', {})
+      .get('/whoami', {
+        validateStatus(status) {
+          return (status >= 200 && status < 300) || status === 401;
+        },
+      })
       .then((response) => {
         if (response.status === 200) {
           setLoggedIn(true);
@@ -54,8 +58,8 @@ export const Header = ({ drawerControl, dimensions }) => {
         setUserLoaded(true);
       })
       .catch(() => {
-        setLoggedIn(true);
-        setUserLoaded(true);
+        setLoggedIn(false);
+        setUserLoaded(false);
         setUser('');
       });
   }, []);
