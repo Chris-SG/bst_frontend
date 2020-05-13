@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Header = ({ drawerControl, dimensions }) => {
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [userLoaded, setUserLoaded] = React.useState(false);
   const [user, setUser] = React.useState('');
   const classes = useStyles({ dimensions });
@@ -44,10 +45,12 @@ export const Header = ({ drawerControl, dimensions }) => {
       .get('/whoami', {})
       .then((response) => {
         if (response.status === 200) {
+          setLoggedIn(true);
           setUserLoaded(true);
           setUser(response.data.nickname);
           return;
         }
+        setLoggedIn(false);
         setUserLoaded(true);
       })
       .catch(() => {
@@ -75,7 +78,7 @@ export const Header = ({ drawerControl, dimensions }) => {
             </Typography>
           </span>
           <span className={classes.right}>
-            { userLoaded ? <UserDropdown user={user} /> : <CircularProgress /> }
+            { userLoaded ? <UserDropdown user={user} loggedIn={loggedIn} /> : <CircularProgress /> }
           </span>
         </Toolbar>
       </AppBar>

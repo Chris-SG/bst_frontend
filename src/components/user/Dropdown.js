@@ -7,13 +7,22 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
+import Backdrop from '@material-ui/core/Backdrop';
 
-export const UserDropdown = ({ user }) => {
+export const UserDropdown = ({ user, loggedIn }) => {
   const [anchorMenu, setAnchorMenu] = React.useState(null);
   const dropdownOpen = Boolean(anchorMenu);
 
-  if (user === '') {
+  if (!loggedIn) {
     return <Button href="/login">Login</Button>;
+  }
+
+  if (user === '') {
+    return (
+      <Backdrop>
+        <AccountCircle />
+      </Backdrop>
+    );
   }
 
   const handleMenu = (event) => {
@@ -41,6 +50,7 @@ UserDropdown.defaultProps = {
 
 UserDropdown.propTypes = {
   user: PropTypes.string,
+  loggedIn: PropTypes.bool,
 };
 
 const UserMenu = ({
