@@ -36,7 +36,7 @@ export const Footer = () => {
       .catch(() => {
         setApiStatus('bad');
       });
-  });
+  }, []);
 
   return (
     <footer id="footer" className={clsx(classes.footer, 'container-fluid')}>
