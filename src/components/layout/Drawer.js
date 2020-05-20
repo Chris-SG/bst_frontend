@@ -10,6 +10,7 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
 import Collapse from '@material-ui/core/Collapse';
+import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -114,6 +115,16 @@ export const NavDrawer = ({ open, dimensions }) => {
         <ListItem>
           <ListItemIcon><AccountCircle /></ListItemIcon>
           <ListItemText primary="abc" />
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <a href="/help">
+              <HelpIcon />
+            </a>
+          </ListItemIcon>
+          <a href="/help">
+            <ListItemText primary="Help" />
+          </a>
         </ListItem>
       </List>
     </Drawer>

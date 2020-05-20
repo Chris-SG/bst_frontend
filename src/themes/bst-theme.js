@@ -12,6 +12,30 @@ const bstTheme = createMuiTheme({
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
+  overrides: {
+    MuiListItem: {
+      root: {
+        '& a': {
+          color: '#cccccc',
+          '&:hover': {
+            color: '#555555',
+          },
+          transition: '0.2s',
+        },
+      },
+    },
+    MuiAppBar: {
+      root: {
+        '& a': {
+          color: '#cccccc',
+          '&:hover': {
+            color: '#555555',
+          },
+          transition: '0.2s',
+        },
+      },
+    },
+  },
 });
 
 export const getTheme = () => bstTheme;
