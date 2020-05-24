@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Loading } from '../common/Loading';
 import { EaLoginForm } from '../common/EaLoginField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 const EaLoginStatus = (setLoginState, setName, setLoading) => {
   axios
@@ -34,6 +35,7 @@ export const UserPage = () => {
   const [name, setName] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [reloadLoginStatus, setReloadLoginStatus] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   useEffect(() => {
     EaLoginStatus(setLoginState, setName, setLoading);
@@ -56,16 +58,32 @@ export const UserPage = () => {
       });
   };
 
+  const ResponseCallback = (response) => {
+    if (response.data.Code === 0) {
+      setReloadLoginStatus(reloadLoginStatus);
+      return;
+    }
+    if (response.data.Code === 211) {
+      setErrorMessage('Seems you\'ve entered an invalid username or password. Please try again.');
+      return;
+    }
+    setErrorMessage('An unknown error has occurred. Please let me know when you made this request and I will look into it.');
+  };
+
   if (loading) {
     return <Loading />;
   }
 
   if (!loginState) {
     return (
-      <EaLoginForm
-        postRequest={() => setLoading(true)}
-        preRequest={() => setReloadLoginStatus(!reloadLoginStatus)}
-      />
+      <>
+        {errorMessage.length > 0 && <Alert severity="error">errorMessage</Alert> }
+        <EaLoginForm
+          responseCallback={ResponseCallback}
+          postRequest={() => setLoading(false)}
+          preRequest={() => setReloadLoginStatus(!reloadLoginStatus) && setErrorMessage('')}
+        />
+      </>
     );
   }
 

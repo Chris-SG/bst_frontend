@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const EaLoginForm = ({ preRequest, postRequest, loginName }) => {
+export const EaLoginForm = ({ preRequest, postRequest, responseCallback, loginName }) => {
   const [username, setUsername] = React.useState(loginName);
   const [password, setPassword] = React.useState('');
   const [otp, setOtp] = React.useState('');
@@ -59,6 +59,7 @@ export const EaLoginForm = ({ preRequest, postRequest, loginName }) => {
         },
       })
       .then((response) => {
+        responseCallback(response);
         postRequest();
       }).catch(() => {
         postRequest();
@@ -128,6 +129,7 @@ EaLoginForm.defaultProps = {
 EaLoginForm.propTypes = {
   preRequest: PropTypes.func.isRequired,
   postRequest: PropTypes.func.isRequired,
+  responseCallback: PropTypes.func.isRequired,
   loginName: PropTypes.string,
 };
 
