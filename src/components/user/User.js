@@ -42,6 +42,7 @@ export const UserPage = () => {
   }, [reloadLoginStatus]);
 
   const EaLogout = () => {
+    setLoading(true);
     const jsonData = {
       username: name,
     };
@@ -54,8 +55,10 @@ export const UserPage = () => {
         },
       })
       .then(() => {
+        setLoading(false);
         setReloadLoginStatus(!reloadLoginStatus);
       }).catch(() => {
+        setLoading(false);
         setReloadLoginStatus(!reloadLoginStatus);
       });
   };
