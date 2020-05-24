@@ -55,14 +55,15 @@ export const UserPage = () => {
       })
       .then(() => {
         setReloadLoginStatus(!reloadLoginStatus);
+      }).catch(() => {
+        setReloadLoginStatus(!reloadLoginStatus);
       });
   };
 
   const ResponseCallback = (response) => {
-    console.log(response);
     if (response.data.Code === 0) {
       setLoading(true);
-      setReloadLoginStatus(reloadLoginStatus);
+      setReloadLoginStatus(!reloadLoginStatus);
       return;
     }
     if (response.data.Code === 211) {
