@@ -59,11 +59,11 @@ export const EaLoginForm = ({ preRequest, postRequest, responseCallback, loginNa
         },
       })
       .then((response) => {
+        postRequest();
         responseCallback(response);
-        postRequest();
       }).catch((error) => {
-        responseCallback(error.response);
         postRequest();
+        responseCallback(error.response);
       });
     return false;
   };

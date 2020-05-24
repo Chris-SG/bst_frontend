@@ -61,6 +61,7 @@ export const UserPage = () => {
   const ResponseCallback = (response) => {
     console.log(response);
     if (response.data.Code === 0) {
+      setLoading(true);
       setReloadLoginStatus(reloadLoginStatus);
       return;
     }
