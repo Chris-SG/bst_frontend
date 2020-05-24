@@ -59,6 +59,7 @@ export const UserPage = () => {
   };
 
   const ResponseCallback = (response) => {
+    console.log(response);
     if (response.data.Code === 0) {
       setReloadLoginStatus(reloadLoginStatus);
       return;
@@ -81,7 +82,10 @@ export const UserPage = () => {
         <EaLoginForm
           responseCallback={ResponseCallback}
           postRequest={() => setLoading(false)}
-          preRequest={() => setReloadLoginStatus(!reloadLoginStatus) && setErrorMessage('')}
+          preRequest={() => {
+            setReloadLoginStatus(!reloadLoginStatus);
+            setErrorMessage('');
+          }}
         />
       </>
     );
