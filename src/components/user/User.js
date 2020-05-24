@@ -78,7 +78,12 @@ export const UserPage = () => {
   if (!loginState) {
     return (
       <>
-        {errorMessage.length > 0 && <Alert severity="error">errorMessage</Alert> }
+        {errorMessage.length > 0
+        && (
+          <Alert severity="error">
+            {errorMessage}
+          </Alert>
+        )}
         <EaLoginForm
           responseCallback={ResponseCallback}
           postRequest={() => setLoading(false)}
