@@ -61,7 +61,8 @@ export const EaLoginForm = ({ preRequest, postRequest, responseCallback, loginNa
       .then((response) => {
         responseCallback(response);
         postRequest();
-      }).catch(() => {
+      }).catch((response) => {
+        responseCallback(response);
         postRequest();
       });
     return false;

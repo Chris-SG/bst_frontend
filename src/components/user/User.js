@@ -83,7 +83,7 @@ export const UserPage = () => {
           responseCallback={ResponseCallback}
           postRequest={() => setLoading(false)}
           preRequest={() => {
-            setReloadLoginStatus(!reloadLoginStatus);
+            setLoading(true);
             setErrorMessage('');
           }}
         />
