@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 const DdrProfile = () => {
   const [profile, setProfile] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isLinked, setIsLinked] = useState(false);
+  const [isLinked, setIsLinked] = useState(true);
+  const [isServerError, setIsServerError] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -55,33 +56,32 @@ const DdrProfile = () => {
           setProfile(response.data);
           setIsLoaded(true);
           setIsLinked(true);
-        } else {
-          setIsLoaded(true);
-          setIsLinked(false);
         }
       })
       .catch((error) => {
-        console.log(error);
-        setProfile(JSON.parse(`{
-          "Name": "BAUXE",
-          "Id": 41316566,
-          "WorkoutData": [
-            {"Date":"2020-3-25","Playcount":15},
-            {"Date":"2020-4-1","Playcount":23},
-            {"Date":"2020-4-5","Playcount":66},
-            {"Date":"2020-4-13","Playcount":1},
-            {"Date":"2020-4-16","Playcount":23},
-            {"Date":"2020-4-19","Playcount":5}
-           ]
-        }`));
+        console.log(error.response);
+        if (error.response.data.Code === 365) {
+          setIsLinked(false);
+        } else {
+          setIsServerError(true);
+        }
         setIsLoaded(true);
-        setIsLinked(true);
       });
   }, []);
 
   if (!isLoaded) {
     return (
       <CircularProgress />
+    );
+  }
+
+  if (isServerError) {
+    return (
+      <>
+        <span>Seems there is something going wrong with our servers...</span>
+        <br />
+        <span>Please reload the page and try again. If issues persist, please contact us.</span>
+      </>
     );
   }
 
@@ -96,7 +96,7 @@ const DdrProfile = () => {
           buttonText="Load All Scores"
           url="/external/api/ddr/refresh"
           callback={loadAllCallback}
-          failureText="Failed to load all data."
+          failureText="Failed to load all data. Have you played DDR before?"
         />
       </>
     );
