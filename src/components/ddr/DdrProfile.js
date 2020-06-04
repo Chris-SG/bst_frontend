@@ -94,7 +94,7 @@ const DdrProfile = () => {
         <br />
         <DdrLoadButton
           buttonText="Load All Scores"
-          url="/external/api/ddr/refresh"
+          url="/external/api/ddr/profile/refresh"
           callback={loadAllCallback}
           failureText="Failed to load all data. Have you played DDR before?"
         />
