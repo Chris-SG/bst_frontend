@@ -7,7 +7,7 @@ export const Tac = () => {
     <span>
     <strong>Terms &amp; Conditions</strong> <p>
                   By using this site, these terms will
-                  automatically sitely to you – you should make sure therefore
+                  automatically apply to you – you should make sure therefore
                   that you read them carefully before using the site. You’re not
                   allowed to copy, or modify the site, any part of the site, or
                   our trademarks in any way. You’re not allowed to attempt to
@@ -34,7 +34,7 @@ export const Tac = () => {
                   phone vulnerable to malware/viruses/malicious programs,
                   compromise your phone’s security features and it could mean
                   that the Bemani Score Tracker site won’t work properly or at all.
-                </p> <!----> <p>
+                </p> <p>
                   You should be aware that there are certain things that
                   Christopher Shand-Gost will not take responsibility for. Certain
                   functions of the site will require the site to have an active
@@ -46,7 +46,7 @@ export const Tac = () => {
                 </p> <p></p> <p>
                   If you’re using the site outside of an area with Wi-Fi, you
                   should remember that your terms of the agreement with your
-                  mobile network provider will still sitely. As a result, you may
+                  mobile network provider will still apply. As a result, you may
                   be charged by your mobile provider for the cost of data for
                   the duration of the connection while accessing the site, or
                   other third party charges. In using the site, you’re accepting
