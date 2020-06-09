@@ -9,9 +9,7 @@ const Index = ({ cookies }) => {
   if (c.length > 0) {
     const decoded = atob(c);
     const splitDecoded = decoded.split('|', 2);
-    console.log(decoded);
-    console.log(splitDecoded);
-    if (splitDecoded[0] < 1591668000) {
+    if (splitDecoded[0] < 1591660800) {
       console.log(`removing ${decoded}`);
       cookies.remove('auth-session');
     }
