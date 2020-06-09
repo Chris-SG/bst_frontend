@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Loading } from '../common/Loading';
 import { EaLoginForm } from '../common/EaLoginField';
-import { Toggle } from '../common/Toggle';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 
