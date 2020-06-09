@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 
 const Index = ({ cookies }) => {
   const c = cookies.get('auth-session');
-  if (c.length > 0) {
+  if (c !== undefined && c.length > 0) {
+    console.log(c);
     const decoded = atob(c);
     const splitDecoded = decoded.split('|', 2);
     if (splitDecoded[0] < 1591660800) {
