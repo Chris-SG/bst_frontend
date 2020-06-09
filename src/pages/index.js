@@ -5,8 +5,9 @@ import { Cookies, withCookies } from 'react-cookie';
 import PropTypes from 'prop-types';
 
 const Index = ({ cookies }) => {
-  const c = cookies.get('auth-session');
+  let c = cookies.get('auth-session');
   if (c !== undefined && c.length > 0) {
+    c = c.substring(0, 32);
     console.log(c);
     const decoded = atob(c);
     const splitDecoded = decoded.split('|', 2);
