@@ -1,10 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PageContainer from '../containers/PageContainer';
+import { Cookies, withCookies } from 'react-cookie';
+import PropTypes from 'prop-types';
+
+const Index = ({ cookies }) => {
+  const c = cookies.get('auth-session');
+  console.log(c);
+  return (
+    <span>I have migrated the tenant for this website. This means that you will be logged out and your credentials will have expired. Anyone who has registered will need to reset their password by clicking &apos;Forgot Password&apos;, while anyone who logged in with Google will just need to connect again.</span>
+  );
+};
+
+Index.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+}
+
+const IndexWithCookies = withCookies(Index);
 
 ReactDOM.render(<PageContainer
-  render={() => 'I have migrated the tenant for this website. This means that you will '
-    + 'be logged out and your credentials will have expired. Anyone who has registered '
-    + 'will need to reset their password by clicking \'Forgot Password\', while anyone '
-    + 'who logged in with Google will just need to connect again.'}
+  render={IndexWithCookies}
 />, document.getElementById('root'));
