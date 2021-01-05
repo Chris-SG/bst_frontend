@@ -45,7 +45,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.51",
     "apexcharts": "^3.18.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "clsx": "^1.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "material-table": "^1.57.2",
